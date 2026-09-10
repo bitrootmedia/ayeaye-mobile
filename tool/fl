@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Runs the Flutter version this project is pinned to.
+#
+# The machine's default Flutter (~/development/flutter) is 3.29, which is too
+# old for shadcn_ui — every published version needs 3.35+. Rather than upgrade
+# a shared SDK that other projects here depend on, this project uses a separate
+# checkout, added as a git worktree of the existing clone so it shares the
+# object store:
+#
+#   cd ~/development/flutter
+#   git fetch --tags origin stable
+#   git worktree add --detach ~/development/flutter-3.47.2 3.47.2
+#
+# Usage: tool/fl analyze | tool/fl test | tool/fl run -d <device>
+set -euo pipefail
+
+FLUTTER_ROOT="${AYEAYE_FLUTTER:-$HOME/development/flutter-3.47.2}"
+
+if [[ ! -x "$FLUTTER_ROOT/bin/flutter" ]]; then
+  echo "No Flutter SDK at $FLUTTER_ROOT" >&2
+  echo "Set AYEAYE_FLUTTER, or create the worktree (see the top of this file)." >&2
+  exit 1
+fi
+
+exec "$FLUTTER_ROOT/bin/flutter" "$@"
