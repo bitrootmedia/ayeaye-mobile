@@ -315,7 +315,7 @@ class _QuickActions extends ConsumerWidget {
             size: ShadButtonSize.sm,
             onPressed: () => _startTimer(context, ref),
             leading: const Icon(LucideIcons.play, size: 13),
-            child: const Text('Start timer'),
+            child: const Text('Start work'),
           ),
         if (task.canClose)
           ShadIconButton.outline(
